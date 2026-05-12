@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import os
 
 # ----------------------------
 # PAGE CONFIG
@@ -76,13 +77,22 @@ st.title("📊 Enterprise Superstore Analytics Dashboard")
 # ----------------------------
 # LOAD DATA (CACHE FOR SPEED)
 # ----------------------------
+# @st.cache_data
+# def load_data():
+#     df = pd.read_csv("superstore.csv")
+#     df.columns = df.columns.str.strip()
+#     return df
+
+# df = load_data()
 @st.cache_data
 def load_data():
-    df = pd.read_csv("superstore.csv")
-    df.columns = df.columns.str.strip()
-    return df
+    BASE_DIR = os.path.dirname(__file__)
+    csv_path = os.path.join(BASE_DIR, "superstore.csv")
 
-df = load_data()
+    df = pd.read_csv(csv_path)
+    df.columns = df.columns.str.strip()
+
+    return df
 
 # ----------------------------
 # SIDEBAR FILTERS
